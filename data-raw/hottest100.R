@@ -19,13 +19,13 @@ hottest100_track_json <- substr(hottest100_script, track_i + attr(track_i, "matc
 hottest100_album_json <- substr(hottest100_script, album_i + attr(album_i, "match.length"), nchar(hottest100_script) - 1)
 
 # Parse the JSON data
-hottest100_tracks <- jsonlite::fromJSON(hottest100_track_json)
-hottest100_albums <- jsonlite::fromJSON(hottest100_album_json)
+tracks <- jsonlite::fromJSON(hottest100_track_json)
+polls <- jsonlite::fromJSON(hottest100_album_json)
 
 # Save to csv
-readr::write_csv(hottest100_tracks, "data-raw/csv/hottest100-tracks.csv")
-readr::write_csv(hottest100_albums, "data-raw/csv/hottest100-albums.csv")
+readr::write_csv(tracks, "data-raw/csv/hottest100-tracks.csv")
+readr::write_csv(polls, "data-raw/csv/hottest100-polls.csv")
 
 # Add to package
-usethis::use_data(hottest100_tracks, overwrite = TRUE)
-usethis::use_data(hottest100_albums, overwrite = TRUE)
+usethis::use_data(tracks, overwrite = TRUE)
+usethis::use_data(polls, overwrite = TRUE)

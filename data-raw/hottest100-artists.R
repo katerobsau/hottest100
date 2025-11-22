@@ -1,11 +1,12 @@
-load("./data/hottest100_tracks.rda")
+load("./data/tracks.rda")
 
 library(dplyr)
-library(tidyr)
 
-hottest100_artists <- hottest100_tracks |>
+artists <- tracks |>
   distinct(artist, country, releaseyear) |>
   mutate(releaseyear = as.integer(releaseyear))
 
-usethis::use_data(hottest100_artists, overwrite = TRUE)
+readr::write_csv(artists, "data-raw/csv/hottest100-artists.csv")
+usethis::use_data(artists, overwrite = TRUE)
+
   

@@ -24,6 +24,6 @@ A data.frame with one row per track, including variables such as:
 tracks
 }
 \description{
-A dataset containing track-level data from the Triple J Hottest 100, scraped on 19 Nov, 2025 from the official Triple J archive.
+A dataset containing track-level data from the Triple J Hottest 100. Scraped on 22 Nov, 2025 from the official Triple J archive.
 }
 \keyword{datasets}

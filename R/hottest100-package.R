@@ -10,7 +10,9 @@ globalVariables(
     "artist",
     "alltime",
     "artist",
+    "n",
     "position",
-    "pollyear"
+    "pollyear",
+    "tracks"
   )
 )

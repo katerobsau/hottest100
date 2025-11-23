@@ -6,6 +6,12 @@
 \usage{
 who_is_the_hottest(year, special = NULL)
 }
+\arguments{
+\item{year}{integer, pollyear to search in `tracks` data.}
+
+\item{special}{logical, whether to include `alltime` in the data. Default is
+to not include this.}
+}
 \description{
 This function will help searching for information by year
 }

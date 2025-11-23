@@ -1,9 +1,10 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^data-raw$
-^inst$
+^inst/helper$
 ^_pkgdown\.yml$
 ^docs$
 ^\.github$
 ^README\.Rmd$
 ^pkgdown$
+^Meta$

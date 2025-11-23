@@ -135,3 +135,8 @@ as_tibble(artists)
 - [`who_is_the_hottest()`](https://github.com/katerobsau/hottest100/reference/who_is_the_hottest.md)
   : Find the best in any year
 
+# Articles
+
+### All vignettes
+
+- [exploration](https://github.com/katerobsau/hottest100/articles/exploration.md):

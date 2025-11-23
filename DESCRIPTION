@@ -40,8 +40,12 @@ Depends:
     R (>= 4.1)
 RoxygenNote: 7.3.3
 Suggests: 
+    forcats,
+    ggplot2,
+    ggrepel,
     knitr,
-    rmarkdown
+    rmarkdown,
+    stringr
 VignetteBuilder: knitr
 Imports: 
     dplyr,

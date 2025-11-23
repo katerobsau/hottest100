@@ -19,6 +19,7 @@ Derived from \code{tracks}
 artists
 }
 \description{
-A deduplicated dataset of artists represented in the Triple J Hottest 100, created from \code{tracks}.
+A deduplicated dataset of artists represented in the Triple J Hottest 100,
+  created from \code{tracks}.
 }
 \keyword{datasets}

@@ -10,8 +10,10 @@ A data.frame with one row per countdown, including variables such as:
   \item{year}{The year the poll was held.}
   \item{alltime}{Logical; whether the poll was an "All-Time" countdown}
   \item{alltimedescription}{A description of the poll, if applicable.}
-  \item{colorRGB}{Primary RGB color value associated with the year in character format.}
-  \item{contrastColorRGB}{Contrasting RGB color value (in character format) suitable for text overlay.}
+  \item{colorRGB}{Primary RGB color value associated with the year in
+    character format.}
+  \item{contrastColorRGB}{Contrasting RGB color value (in character format)
+    suitable for text overlay.}
 }
 }
 \source{
@@ -21,6 +23,7 @@ A data.frame with one row per countdown, including variables such as:
 polls
 }
 \description{
-A dataset with information about each Triple J Hottest 100 poll. Scraped on 22 Nov, 2025 from the official Triple J archive.
+A dataset with information about each Triple J Hottest 100 poll. Scraped
+on 22 Nov, 2025 from the official Triple J archive.
 }
 \keyword{datasets}

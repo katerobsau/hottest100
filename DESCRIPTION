@@ -27,8 +27,10 @@ Authors@R:
              family = "Tierney",
              email = "nicholas.tierney@gmail.com",
              role = "aut",
-             comment = c(ORCID = "0000-0003-1460-8722"))
-             )
+             comment = c(ORCID = "0000-0003-1460-8722")),
+      person(given = "Margaret",
+             family = "Colville",
+             role = "aut"))
 Description: This is a data package containing records from <https://www.abc.net.au/triplej/countdown/hottest100/australiansongs> in November 2025.
 URL: https://github.com/katerobsau/hottest100
 License: GPL-3

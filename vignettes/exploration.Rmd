@@ -1,5 +1,6 @@
 ---
-title: "exploration"
+title: "Exploring Triple J Hottest 100 data"
+author: "Margaret Colville"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{exploration}

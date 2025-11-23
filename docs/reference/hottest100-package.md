@@ -28,3 +28,5 @@ Authors:
 
 - Nicholas Tierney <nicholas.tierney@gmail.com>
   ([ORCID](https://orcid.org/0000-0003-1460-8722))
+
+- Margaret Colville

@@ -1,0 +1,88 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# hottest100
+
+<!-- badges: start -->
+[![R-CMD-check](https://github.com/katerobsau/hottest100/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/katerobsau/hottest100/actions/workflows/R-CMD-check.yaml)
+[![Codecov test coverage](https://codecov.io/gh/katerobsau/hottest100/graph/badge.svg)](https://app.codecov.io/gh/katerobsau/hottest100)
+<!-- badges: end -->
+
+The goal of hottest100 is to provide a compendium of Triple J hottest 100 songs. Data is scraped from [Triple J's best 100 Australian songs](https://www.abc.net.au/triplej/countdown/hottest100/australiansongs)
+and historic information on [Wikipedia](https://en.wikipedia.org/wiki/Triple_J_Hottest_100).
+
+There are three data sets on artists, tracks, and polls. 
+
+## Installation
+
+You can install the development version of hottest100 from [GitHub](https://github.com/) with:
+
+``` r
+# install.packages("pak")
+pak::pak("katerobsau/hottest100")
+```
+
+## Data sets available
+
+```{r}
+library(hottest100)
+library(tibble)
+```
+
+### Tracks
+
+Triple J Hottest 100 Track Data - A dataset containing track-level data from the Triple J Hottest 100. A data.frame with one row per track, including variables:
+
+* __alltime__: Logical; indicates if the entry is from an all-time chart specific year.
+* __artist__: Character; name of the artist or band associated withtrack.
+* __country__: Character; the country associated with the track/chart.
+* __id__: Unique identifier for each track (within year)
+* __pollyear__: Countdown poll year
+* __position__: Chart position of the track.
+* __track__: Title of the track or song.
+* __releaseyear__: Original release year of the track.
+
+```{r}
+as_tibble(tracks)
+```
+
+### Polls
+
+Triple J Hottest 100 Polls. A dataset with information about each Triple J Hottest 100 poll. 
+
+A data.frame with one row per countdown, including variables:
+
+* __year__: The year the poll was held.
+* __alltime__: Logical; whether the poll was an "All-Time" countdown
+* __alltimedescription__: A description of the poll, if applicable.
+* __colorRGB__: Primary RGB color value associated with the year in character format.
+* __contrastColorRGB__: Contrasting RGB color value (in character format) suitable for text overlay.
+
+```{r}
+as_tibble(polls)
+```
+
+### Artists
+
+Triple J Hottest 100 Artists. A deduplicated dataset of artists represented in the Triple J Hottest 100, created from `tracks`.
+ 
+* __artist__: Artist name
+* __country__: Country of origin
+* __releaseyear__: Release year of included track
+
+
+```{r}
+as_tibble(artists)
+```

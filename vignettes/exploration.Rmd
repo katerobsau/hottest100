@@ -213,7 +213,7 @@ The artists that are appearing frequently are an interesting mix of old timers a
 tracks_clean |>
   filter(!alltime )|>
   semi_join(
-
+    # Filter to only the artists with the most appearances
     {tracks_clean |>
       filter(!alltime ) |>
       group_by(artist) |>
@@ -230,7 +230,9 @@ tracks_clean |>
   ungroup() |>
   group_by(artist) |>
   mutate(total_hits = sum(hits)) |>
+  # Adding a filtered version of the artist's name for use in labelling the chart
   mutate(artist_name = ifelse(total_hits == cumulative_hits, artist, NA_character_)) |>
+  # We'll use artist_name_y to offset the name positions a bit from the actual points so we can see both
   mutate(artist_name_y = ifelse(total_hits == cumulative_hits, cumulative_hits + 1, NA_integer_)) |>
   ungroup() |>
   ggplot(aes(x = pollyear, y = cumulative_hits, group = artist, col = artist)) +

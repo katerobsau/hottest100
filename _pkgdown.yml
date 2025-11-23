@@ -1,5 +1,4 @@
 url: https://github.com/katerobsau/hottest100
-
 template:
-  params:
-    bootswatch: cosmo
+  bootstrap: 5
+

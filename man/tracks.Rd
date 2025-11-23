@@ -7,8 +7,10 @@
 \format{
 A data.frame with one row per track, including variables such as:
 \describe{
-  \item{alltime}{Logical; indicates if the entry is from an all-time chart or specific year.}
-  \item{artist}{Character; name of the artist or band associated with the track.}
+  \item{alltime}{Logical; indicates if the entry is from an all-time chart
+    or specific year.}
+  \item{artist}{Character; name of the artist or band associated with
+    the track.}
   \item{country}{Character; the country associated with the track/chart.}
   \item{id}{Unique identifier for each track (within year)}
   \item{pollyear}{Countdown poll year}
@@ -24,6 +26,7 @@ A data.frame with one row per track, including variables such as:
 tracks
 }
 \description{
-A dataset containing track-level data from the Triple J Hottest 100. Scraped on 22 Nov, 2025 from the official Triple J archive.
+A dataset containing track-level data from the Triple J Hottest 100.
+  Scraped on 22 Nov, 2025 from the official Triple J archive.
 }
 \keyword{datasets}

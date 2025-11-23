@@ -1,0 +1,121 @@
+# hottest100
+
+The goal of hottest100 is to provide a compendium of Triple J hottest
+100 songs. Data is scraped from [Triple J’s best 100 Australian
+songs](https://www.abc.net.au/triplej/countdown/hottest100/australiansongs)
+and historic information on
+[Wikipedia](https://en.wikipedia.org/wiki/Triple_J_Hottest_100).
+
+There are three data sets on artists, tracks, and polls.
+
+## Installation
+
+You can install the development version of hottest100 from
+[GitHub](https://github.com/) with:
+
+``` r
+# install.packages("pak")
+pak::pak("katerobsau/hottest100")
+```
+
+## Data sets available
+
+``` r
+library(hottest100)
+library(tibble)
+```
+
+### Tracks
+
+Triple J Hottest 100 Track Data - A dataset containing track-level data
+from the Triple J Hottest 100. A data.frame with one row per track,
+including variables:
+
+- **alltime**: Logical; indicates if the entry is from an all-time chart
+  specific year.
+- **artist**: Character; name of the artist or band associated
+  withtrack.
+- **country**: Character; the country associated with the track/chart.
+- **id**: Unique identifier for each track (within year)
+- **pollyear**: Countdown poll year
+- **position**: Chart position of the track.
+- **track**: Title of the track or song.
+- **releaseyear**: Original release year of the track.
+
+``` r
+as_tibble(tracks)
+#> # A tibble: 4,200 × 8
+#>    alltime artist           country   id    pollyear position releaseyear track 
+#>    <lgl>   <chr>            <chr>     <chr>    <int>    <int> <chr>       <chr> 
+#>  1 FALSE   Spiderbait       Australia 1         1996        1 1996        Buy M…
+#>  2 FALSE   Tool             USA       2         1996        2 1996        Stink…
+#>  3 FALSE   Ben Folds Five   USA       3         1996        3 1996        Under…
+#>  4 FALSE   Butthole Surfers USA       4         1996        4 1996        Pepper
+#>  5 FALSE   Bush             UK        5         1996        5 1996        Glyce…
+#>  6 FALSE   Powderfinger     Australia 6         1996        6 1996        Pick …
+#>  7 FALSE   The Prodigy      UK        7         1996        7 1996        Breat…
+#>  8 FALSE   Allen Ginsberg   USA       8         1996        8 1996        Balla…
+#>  9 FALSE   Weezer           USA       9         1996        9 1996        El Sc…
+#> 10 FALSE   311              USA       10        1996       11 1996        Down  
+#> # ℹ 4,190 more rows
+```
+
+### Polls
+
+Triple J Hottest 100 Polls. A dataset with information about each Triple
+J Hottest 100 poll.
+
+A data.frame with one row per countdown, including variables:
+
+- **year**: The year the poll was held.
+- **alltime**: Logical; whether the poll was an “All-Time” countdown
+- **alltimedescription**: A description of the poll, if applicable.
+- **colorRGB**: Primary RGB color value associated with the year in
+  character format.
+- **contrastColorRGB**: Contrasting RGB color value (in character
+  format) suitable for text overlay.
+
+``` r
+as_tibble(polls)
+#> # A tibble: 42 × 5
+#>     year alltime alltimedescription    colorRGB      contrastColorRGB
+#>    <int> <lgl>   <chr>                 <chr>         <chr>           
+#>  1  2025 TRUE    "Of Australian Songs" 224, 49, 37   <NA>            
+#>  2  2024 FALSE   ""                    119, 38, 127  <NA>            
+#>  3  2023 FALSE   ""                    221, 121, 62  0, 0, 0         
+#>  4  2023 TRUE    "Like A Version"      46, 65, 79    <NA>            
+#>  5  2022 FALSE   ""                    248, 215, 189 0, 0, 0         
+#>  6  2021 FALSE   ""                    0, 135, 0     <NA>            
+#>  7  2020 FALSE   ""                    239, 43, 204  0, 0, 0         
+#>  8  2020 TRUE    "Of The Decade"       16, 32, 92    <NA>            
+#>  9  2019 FALSE   ""                    244, 171, 68  0, 0, 0         
+#> 10  2018 FALSE   ""                    181, 204, 62  0, 0, 0         
+#> # ℹ 32 more rows
+```
+
+### Artists
+
+Triple J Hottest 100 Artists. A deduplicated dataset of artists
+represented in the Triple J Hottest 100, created from `tracks`.
+
+- **artist**: Artist name
+- **country**: Country of origin
+- **releaseyear**: Release year of included track
+
+``` r
+as_tibble(artists)
+#> # A tibble: 2,729 × 3
+#>    artist           country   releaseyear
+#>    <chr>            <chr>     <chr>      
+#>  1 Spiderbait       Australia 1996       
+#>  2 Tool             USA       1996       
+#>  3 Ben Folds Five   USA       1996       
+#>  4 Butthole Surfers USA       1996       
+#>  5 Bush             UK        1996       
+#>  6 Powderfinger     Australia 1996       
+#>  7 The Prodigy      UK        1996       
+#>  8 Allen Ginsberg   USA       1996       
+#>  9 Weezer           USA       1996       
+#> 10 311              USA       1996       
+#> # ℹ 2,719 more rows
+```

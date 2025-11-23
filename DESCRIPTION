@@ -1,6 +1,6 @@
 Package: hottest100
 Type: Package
-Title: Compendium of Triple J's Hottest 100 tracks.
+Title: Compendium of Triple J's Hottest 100 tracks
 Version: 0.1.0
 Authors@R: 
     c(person(given = "Kate",
@@ -22,7 +22,13 @@ Authors@R:
              family = "Cook", 
              email = "visnut@gmail.com", 
              role = c("aut"), 
-             comment = c(ORCID = "0000-0002-3813-7155")))
+             comment = c(ORCID = "0000-0002-3813-7155")),
+      person(given = "Nicholas",
+             family = "Tierney",
+             email = "nicholas.tierney@gmail.com",
+             role = "aut",
+             comment = c(ORCID = "0000-0003-1460-8722"))
+             )
 Description: This is a data package containing records from <https://www.abc.net.au/triplej/countdown/hottest100/australiansongs> in November 2025.
 URL: https://github.com/katerobsau/hottest100
 License: GPL-3
@@ -35,3 +41,6 @@ Suggests:
     knitr,
     rmarkdown
 VignetteBuilder: knitr
+Imports: 
+    dplyr,
+    glue

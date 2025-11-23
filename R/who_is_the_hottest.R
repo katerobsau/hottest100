@@ -8,6 +8,7 @@
 #'
 #' @export
 #' @examples
+#' who_is_the_hottest(1993)
 #' who_is_the_hottest(2023)
 who_is_the_hottest <- function(year, special = NULL) {
   year_range <- tracks$pollyear |> range()

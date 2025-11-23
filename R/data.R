@@ -14,6 +14,9 @@
 #'     suitable for text overlay.}
 #' }
 #' @source \url{https://www.abc.net.au/triplej/hottest100/archive/search/}
+#' @examples
+#' library(dplyr)
+#' as_tibble(polls)
 "polls"
 
 #' Triple J Hottest 100 Artists
@@ -28,6 +31,17 @@
 #'   \item{releaseyear}{Release year of included track}
 #' }
 #' @source Derived from \code{tracks}
+#' @examples
+#' library(dplyr)
+#' as_tibble(artists)
+#' # who has appeared 10 or more times?
+#' artists |>
+#'   count(artist, sort = TRUE) |>
+#'   filter(n >= 10)
+#' # top 10 artists?
+#' artists |>
+#'   count(country, sort = TRUE) |>
+#'   slice_max(n = 10, order_by = n)
 "artists"
 
 #' Triple J Hottest 100 Track Data
@@ -49,4 +63,24 @@
 #'   \item{track}{Title of the track or song.}
 #' }
 #' @source \url{https://www.abc.net.au/triplej/hottest100/archive/search/}
+#' @examples
+#' library(dplyr)
+#' as_tibble(tracks)
+#'
+#' # What are the top 1 tracks not incuding the "alltime" counts
+#' tracks |>
+#'   filter(
+#'     position == 1,
+#'     alltime == FALSE
+#'   ) |>
+#'   arrange(pollyear) |>
+#'   relocate(
+#'     pollyear,
+#'     position,
+#'     track,
+#'     artist,
+#'     country,
+#'     releaseyear,
+#'     id
+#'   )
 "tracks"

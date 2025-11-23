@@ -4,11 +4,21 @@
 \alias{get_factd}
 \title{Get the facts}
 \usage{
-get_factd()
+get_factd(factd = sample(1:6, 1))
+}
+\arguments{
+\item{factd}{is the type of fact to extract, defaults to sample(1:6)}
 }
 \description{
-This function will help searching for information
+This function will provide some random facts in one of several different
+  categories of fact(d)s: artists with the most entries ever; artist who
+  has the most entries in regular countdowns ever; Artist who has the most
+  entries in the top 10 ever, Artist who has the most entries in the top 10
+  regular countdowns ever, artist who has appeared in the most number of
+  countdowns, artist who has appeared in the most number of reg countdowns.
 }
 \examples{
+get_factd()
+get_factd()
 get_factd()
 }

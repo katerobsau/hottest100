@@ -26,4 +26,8 @@ polls
 A dataset with information about each Triple J Hottest 100 poll. Scraped
 on 22 Nov, 2025 from the official Triple J archive.
 }
+\examples{
+library(dplyr)
+as_tibble(polls)
+}
 \keyword{datasets}

@@ -22,4 +22,16 @@ artists
 A deduplicated dataset of artists represented in the Triple J Hottest 100,
   created from \code{tracks}.
 }
+\examples{
+library(dplyr)
+as_tibble(artists)
+# who has appeared 10 or more times?
+artists |>
+  count(artist, sort = TRUE) |>
+  filter(n >= 10)
+# top 10 artists?
+artists |>
+  count(country, sort = TRUE) |>
+  slice_max(n = 10, order_by = n)
+}
 \keyword{datasets}

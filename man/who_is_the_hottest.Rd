@@ -16,5 +16,6 @@ to not include this.}
 This function will help searching for information by year
 }
 \examples{
+who_is_the_hottest(1993)
 who_is_the_hottest(2023)
 }

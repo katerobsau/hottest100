@@ -29,4 +29,25 @@ tracks
 A dataset containing track-level data from the Triple J Hottest 100.
   Scraped on 22 Nov, 2025 from the official Triple J archive.
 }
+\examples{
+library(dplyr)
+as_tibble(tracks)
+
+# What are the top 1 tracks not incuding the "alltime" counts
+tracks |>
+  filter(
+    position == 1,
+    alltime == FALSE
+  ) |>
+  arrange(pollyear) |>
+  relocate(
+    pollyear,
+    position,
+    track,
+    artist,
+    country,
+    releaseyear,
+    id
+  )
+}
 \keyword{datasets}

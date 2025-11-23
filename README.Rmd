@@ -39,6 +39,7 @@ pak::pak("katerobsau/hottest100")
 ```{r}
 library(hottest100)
 library(tibble)
+library(dplyr)
 ```
 
 ### Tracks
@@ -56,6 +57,19 @@ Triple J Hottest 100 Track Data - A dataset containing track-level data from the
 
 ```{r}
 as_tibble(tracks)
+# What are the top 1 tracks not incuding the "alltime" counts
+tracks |>
+ filter(
+   position == 1,
+   alltime == FALSE
+ ) |>
+ arrange(pollyear) |>
+ select(
+   pollyear,
+   position,
+   track,
+   artist
+ )
 ```
 
 ### Polls
@@ -85,4 +99,60 @@ Triple J Hottest 100 Artists. A deduplicated dataset of artists represented in t
 
 ```{r}
 as_tibble(artists)
+# who has appeared 10 or more times?
+artists |>
+ count(artist, sort = TRUE) |>
+ filter(n >= 10)
+
+# top 10 artists?
+artists |>
+ count(country, sort = TRUE) |>
+ slice_max(n = 10, order_by = n)
+```
+
+# Old timers and newbies
+
+The artists that are appearing frequently are an interesting mix of old timers and newbies.  For the most common artists, have they had a long career, or did they rocket up the charts quickly? 
+
+```{r hit-velocity}
+#| fig.width: 7
+#| fig.height: 5
+library(ggplot2)
+library(ggrepel)
+
+tracks |>
+  filter(!alltime )|>
+  semi_join(
+    # Filter to only the artists with the most appearances
+    {tracks |>
+      filter(!alltime ) |>
+      group_by(artist) |>
+      summarise(count = n()) |>
+      ungroup() |>
+      slice_max(count, n = 10)}
+  ) |>
+  group_by(artist, pollyear) |>
+  summarise(hits = n()) |>
+  ungroup() |>
+  arrange(artist, pollyear) |>
+  group_by(artist) |>
+  mutate(cumulative_hits = cumsum(hits)) |>
+  ungroup() |>
+  group_by(artist) |>
+  mutate(total_hits = sum(hits)) |>
+  # Adding a filtered version of the artist's name for use in labelling the chart
+  mutate(artist_name = ifelse(total_hits == cumulative_hits, artist, NA_character_)) |>
+  # We'll use artist_name_y to offset the name positions a bit from the actual points so we can see both
+  mutate(artist_name_y = ifelse(total_hits == cumulative_hits, cumulative_hits + 1, NA_integer_)) |>
+  ungroup() |>
+  ggplot(aes(x = pollyear, y = cumulative_hits, group = artist, col = artist)) +
+  geom_line() +
+  geom_point() +
+  geom_label_repel(aes(y = artist_name_y, label = artist_name)) +
+  theme_bw() +
+  theme(legend.position = 'none') +
+  scale_x_continuous(limits = c(NA, 2030)) +
+  labs(title = "Comparative velocity of most popular Triple J Hottest 100 artists over time",
+       caption = "10 artists with the most songs across time in the 'this year' polls")
+
 ```

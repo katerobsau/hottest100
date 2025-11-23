@@ -23,6 +23,15 @@ pak::pak("katerobsau/hottest100")
 ``` r
 library(hottest100)
 library(tibble)
+library(dplyr)
+#> 
+#> Attaching package: 'dplyr'
+#> The following objects are masked from 'package:stats':
+#> 
+#>     filter, lag
+#> The following objects are masked from 'package:base':
+#> 
+#>     intersect, setdiff, setequal, union
 ```
 
 ### Tracks
@@ -58,6 +67,85 @@ as_tibble(tracks)
 #>  9 FALSE   Weezer           USA       9         1996        9 1996        El Sc…
 #> 10 FALSE   311              USA       10        1996       11 1996        Down  
 #> # ℹ 4,190 more rows
+# What are the top 1 tracks not incuding the "alltime" counts
+tracks |>
+ filter(
+   position == 1,
+   alltime == FALSE
+ ) |>
+ arrange(pollyear) |>
+ select(
+   pollyear,
+   position,
+   track,
+   artist
+ )
+#>    pollyear position                                     track
+#> 1      1993        1                                   Asshole
+#> 2      1994        1                                    Zombie
+#> 3      1995        1                                Wonderwall
+#> 4      1996        1                             Buy Me a Pony
+#> 5      1997        1                            No Aphrodisiac
+#> 6      1998        1              Pretty Fly (For a White Guy)
+#> 7      1999        1                                These Days
+#> 8      2000        1                              My Happiness
+#> 9      2001        1                                   Amazing
+#> 10     2002        1                              No One Knows
+#> 11     2003        1                 Are You Gonna Be My Girl?
+#> 12     2004        1                               Take Me Out
+#> 13     2005        1                             Wish You Well
+#> 14     2006        1                          One Crowded Hour
+#> 15     2007        1                        Knights of Cydonia
+#> 16     2008        1                               Sex on Fire
+#> 17     2009        1                           Little Lion Man
+#> 18     2010        1                             Big Jet Plane
+#> 19     2011        1 Somebody That I Used to Know {ft. Kimbra}
+#> 20     2012        1                    Thrift Shop {ft. Wanz}
+#> 21     2013        1                                   Riptide
+#> 22     2014        1                             Talk Is Cheap
+#> 23     2015        1                                     Hoops
+#> 24     2016        1               Never Be Like You {Ft. Kai}
+#> 25     2017        1                                   HUMBLE.
+#> 26     2018        1                                Confidence
+#> 27     2019        1                                   bad guy
+#> 28     2020        1                                Heat Waves
+#> 29     2021        1   Elephant [triple j Like A Version 2021]
+#> 30     2022        1                               Say Nothing
+#> 31     2023        1                        Paint The Town Red
+#> 32     2024        1                          Good Luck, Babe!
+#>                     artist
+#> 1              Denis Leary
+#> 2          The Cranberries
+#> 3                    Oasis
+#> 4               Spiderbait
+#> 5             The Whitlams
+#> 6            The Offspring
+#> 7             Powderfinger
+#> 8             Powderfinger
+#> 9               Alex Lloyd
+#> 10 Queens of the Stone Age
+#> 11                     Jet
+#> 12         Franz Ferdinand
+#> 13         Bernard Fanning
+#> 14             Augie March
+#> 15                    Muse
+#> 16           Kings of Leon
+#> 17          Mumford & Sons
+#> 18     Angus & Julia Stone
+#> 19                   Gotye
+#> 20 Macklemore & Ryan Lewis
+#> 21               Vance Joy
+#> 22              Chet Faker
+#> 23              The Rubens
+#> 24                   Flume
+#> 25          Kendrick Lamar
+#> 26             Ocean Alley
+#> 27           Billie Eilish
+#> 28           Glass Animals
+#> 29             The Wiggles
+#> 30       Flume [Ft. MAY-A]
+#> 31                Doja Cat
+#> 32           Chappell Roan
 ```
 
 ### Polls
@@ -118,7 +206,97 @@ as_tibble(artists)
 #>  9 Weezer           USA       1996       
 #> 10 311              USA       1996       
 #> # ℹ 2,719 more rows
+# who has appeared 10 or more times?
+artists |>
+ count(artist, sort = TRUE) |>
+ filter(n >= 10)
+#>                  artist  n
+#> 1         Hilltop Hoods 14
+#> 2          Foo Fighters 12
+#> 3              The Cure 12
+#> 4        The Living End 12
+#> 5        Arctic Monkeys 11
+#> 6             Radiohead 11
+#> 7  Bring Me The Horizon 10
+#> 8             Grinspoon 10
+#> 9                  Illy 10
+#> 10           Kanye West 10
+#> 11            Metallica 10
+#> 12            Pearl Jam 10
+#> 13         Powderfinger 10
+#> 14               R.E.M. 10
+#> 15          Tame Impala 10
+#> 16                   U2 10
+
+# top 10 artists?
+artists |>
+ count(country, sort = TRUE) |>
+ slice_max(n = 10, order_by = n)
+#>        country    n
+#> 1    Australia 1234
+#> 2          USA  757
+#> 3           UK  479
+#> 4       Canada   48
+#> 5  New Zealand   29
+#> 6       Sweden   27
+#> 7      Ireland   23
+#> 8       France   18
+#> 9      Germany   11
+#> 10     Iceland   11
 ```
+
+# Old timers and newbies
+
+The artists that are appearing frequently are an interesting mix of old
+timers and newbies. For the most common artists, have they had a long
+career, or did they rocket up the charts quickly?
+
+``` r
+library(ggplot2)
+library(ggrepel)
+
+tracks |>
+  filter(!alltime )|>
+  semi_join(
+    # Filter to only the artists with the most appearances
+    {tracks |>
+      filter(!alltime ) |>
+      group_by(artist) |>
+      summarise(count = n()) |>
+      ungroup() |>
+      slice_max(count, n = 10)}
+  ) |>
+  group_by(artist, pollyear) |>
+  summarise(hits = n()) |>
+  ungroup() |>
+  arrange(artist, pollyear) |>
+  group_by(artist) |>
+  mutate(cumulative_hits = cumsum(hits)) |>
+  ungroup() |>
+  group_by(artist) |>
+  mutate(total_hits = sum(hits)) |>
+  # Adding a filtered version of the artist's name for use in labelling the chart
+  mutate(artist_name = ifelse(total_hits == cumulative_hits, artist, NA_character_)) |>
+  # We'll use artist_name_y to offset the name positions a bit from the actual points so we can see both
+  mutate(artist_name_y = ifelse(total_hits == cumulative_hits, cumulative_hits + 1, NA_integer_)) |>
+  ungroup() |>
+  ggplot(aes(x = pollyear, y = cumulative_hits, group = artist, col = artist)) +
+  geom_line() +
+  geom_point() +
+  geom_label_repel(aes(y = artist_name_y, label = artist_name)) +
+  theme_bw() +
+  theme(legend.position = 'none') +
+  scale_x_continuous(limits = c(NA, 2030)) +
+  labs(title = "Comparative velocity of most popular Triple J Hottest 100 artists over time",
+       caption = "10 artists with the most songs across time in the 'this year' polls")
+#> Joining with `by = join_by(artist)`
+#> `summarise()` has grouped output by 'artist'. You can override using the
+#> `.groups` argument.
+#> Warning: Removed 77 rows containing missing values or values outside the scale range
+#> (`geom_label_repel()`).
+```
+
+![](reference/figures/README-hit-velocity-1.png)
 
 # Package index
 
@@ -139,4 +317,5 @@ as_tibble(artists)
 
 ### All vignettes
 
-- [exploration](https://github.com/katerobsau/hottest100/articles/exploration.md):
+- [Exploring Triple J Hottest 100
+  data](https://github.com/katerobsau/hottest100/articles/exploration.md):

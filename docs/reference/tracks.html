@@ -20,7 +20,7 @@
       <ul class="navbar-nav me-auto"><li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
-  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/exploration.html">exploration</a></li>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/exploration.html">Exploring Triple J Hottest 100 data</a></li>
   </ul></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json"></form></li>
@@ -83,6 +83,109 @@
     <p><a href="https://www.abc.net.au/triplej/hottest100/archive/search/" class="external-link">https://www.abc.net.au/triplej/hottest100/archive/search/</a></p>
     </div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html" class="external-link">as_tibble</a></span><span class="op">(</span><span class="va">tracks</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 4,200 × 8</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    alltime artist           country   id    pollyear position releaseyear track </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> FALSE   Spiderbait       Australia 1         <span style="text-decoration: underline;">1</span>996        1 1996        Buy M…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> FALSE   Tool             USA       2         <span style="text-decoration: underline;">1</span>996        2 1996        Stink…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> FALSE   Ben Folds Five   USA       3         <span style="text-decoration: underline;">1</span>996        3 1996        Under…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> FALSE   Butthole Surfers USA       4         <span style="text-decoration: underline;">1</span>996        4 1996        Pepper</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> FALSE   Bush             UK        5         <span style="text-decoration: underline;">1</span>996        5 1996        Glyce…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> FALSE   Powderfinger     Australia 6         <span style="text-decoration: underline;">1</span>996        6 1996        Pick …</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> FALSE   The Prodigy      UK        7         <span style="text-decoration: underline;">1</span>996        7 1996        Breat…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> FALSE   Allen Ginsberg   USA       8         <span style="text-decoration: underline;">1</span>996        8 1996        Balla…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> FALSE   Weezer           USA       9         <span style="text-decoration: underline;">1</span>996        9 1996        El Sc…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> FALSE   311              USA       10        <span style="text-decoration: underline;">1</span>996       11 1996        Down  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 4,190 more rows</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># What are the top 1 tracks not incuding the "alltime" counts</span></span></span>
+<span class="r-in"><span><span class="va">tracks</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    <span class="va">position</span> <span class="op">==</span> <span class="fl">1</span>,</span></span>
+<span class="r-in"><span>    <span class="va">alltime</span> <span class="op">==</span> <span class="cn">FALSE</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="va">pollyear</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/relocate.html" class="external-link">relocate</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    <span class="va">pollyear</span>,</span></span>
+<span class="r-in"><span>    <span class="va">position</span>,</span></span>
+<span class="r-in"><span>    <span class="va">track</span>,</span></span>
+<span class="r-in"><span>    <span class="va">artist</span>,</span></span>
+<span class="r-in"><span>    <span class="va">country</span>,</span></span>
+<span class="r-in"><span>    <span class="va">releaseyear</span>,</span></span>
+<span class="r-in"><span>    <span class="va">id</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    pollyear position                                     track</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1      1993        1                                   Asshole</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2      1994        1                                    Zombie</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3      1995        1                                Wonderwall</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4      1996        1                             Buy Me a Pony</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5      1997        1                            No Aphrodisiac</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6      1998        1              Pretty Fly (For a White Guy)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7      1999        1                                These Days</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8      2000        1                              My Happiness</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9      2001        1                                   Amazing</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10     2002        1                              No One Knows</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11     2003        1                 Are You Gonna Be My Girl?</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12     2004        1                               Take Me Out</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13     2005        1                             Wish You Well</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14     2006        1                          One Crowded Hour</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15     2007        1                        Knights of Cydonia</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16     2008        1                               Sex on Fire</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17     2009        1                           Little Lion Man</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18     2010        1                             Big Jet Plane</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19     2011        1 Somebody That I Used to Know {ft. Kimbra}</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20     2012        1                    Thrift Shop {ft. Wanz}</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21     2013        1                                   Riptide</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22     2014        1                             Talk Is Cheap</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 23     2015        1                                     Hoops</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24     2016        1               Never Be Like You {Ft. Kai}</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25     2017        1                                   HUMBLE.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 26     2018        1                                Confidence</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 27     2019        1                                   bad guy</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 28     2020        1                                Heat Waves</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 29     2021        1   Elephant [triple j Like A Version 2021]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 30     2022        1                               Say Nothing</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 31     2023        1                        Paint The Town Red</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 32     2024        1                          Good Luck, Babe!</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                     artist   country releaseyear         id alltime</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1              Denis Leary       USA        1993        547   FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2          The Cranberries   Ireland        1994       1821   FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3                    Oasis        UK        1995       1368   FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4               Spiderbait Australia        1996          1   FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5             The Whitlams Australia        1997        909   FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6            The Offspring       USA        1998        640   FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7             Powderfinger Australia        1999       1638   FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8             Powderfinger Australia        2000       1455   FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9               Alex Lloyd Australia        2001        995   FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10 Queens of the Stone Age       USA        2002        176   FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11                     Jet Australia        2003       1548   FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12         Franz Ferdinand        UK        2004        730   FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13         Bernard Fanning Australia        2005       1730   FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14             Augie March Australia        2006       1272   FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15                    Muse        UK        2007       1087   FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16           Kings of Leon       USA        2008       1182   FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17          Mumford &amp; Sons        UK        2009        265   FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18     Angus &amp; Julia Stone Australia        2010        454   FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19                   Gotye Australia        2011       2201   FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20 Macklemore &amp; Ryan Lewis       USA        2012       2502   FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21               Vance Joy Australia        2013       2702   FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22              Chet Faker Australia        2014       2802   FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 23              The Rubens Australia        2015       2902   FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24                   Flume Australia        2016       3002   FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25          Kendrick Lamar       USA        2017        910   FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 26             Ocean Alley Australia        2018       1140   FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 27           Billie Eilish       USA        &lt;NA&gt;     edc6f2   FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 28           Glass Animals        UK        2020   D1F13F72   FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 29             The Wiggles Australia        2021      12021   FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 30       Flume [Ft. MAY-A] Australia        2022 mpL5pbNQMn   FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 31                Doja Cat       USA        2023 mpr8bab0NL   FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 32           Chappell Roan       USA        2024 mpnYv168jL   FALSE</span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>
 

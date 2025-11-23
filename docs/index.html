@@ -38,7 +38,7 @@
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
-<li><a class="dropdown-item" href="articles/exploration.html">exploration</a></li>
+<li><a class="dropdown-item" href="articles/exploration.html">Exploring Triple J Hottest 100 data</a></li>
   </ul>
 </li>
       </ul>
@@ -74,7 +74,16 @@
 </h2>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/katerobsau/hottest100">hottest100</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tibble.tidyverse.org/" class="external-link">tibble</a></span><span class="op">)</span></span></code></pre></div>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tibble.tidyverse.org/" class="external-link">tibble</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Attaching package: 'dplyr'</span></span>
+<span><span class="co">#&gt; The following objects are masked from 'package:stats':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     filter, lag</span></span>
+<span><span class="co">#&gt; The following objects are masked from 'package:base':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     intersect, setdiff, setequal, union</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="tracks">Tracks<a class="anchor" aria-label="anchor" href="#tracks"></a>
 </h3>
@@ -112,7 +121,86 @@
 <span><span class="co">#&gt;  8 FALSE   Allen Ginsberg   USA       8         1996        8 1996        Balla…</span></span>
 <span><span class="co">#&gt;  9 FALSE   Weezer           USA       9         1996        9 1996        El Sc…</span></span>
 <span><span class="co">#&gt; 10 FALSE   311              USA       10        1996       11 1996        Down  </span></span>
-<span><span class="co">#&gt; # ℹ 4,190 more rows</span></span></code></pre></div>
+<span><span class="co">#&gt; # ℹ 4,190 more rows</span></span>
+<span><span class="co"># What are the top 1 tracks not incuding the "alltime" counts</span></span>
+<span><span class="va">tracks</span> <span class="op">|&gt;</span></span>
+<span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span></span>
+<span>   <span class="va">position</span> <span class="op">==</span> <span class="fl">1</span>,</span>
+<span>   <span class="va">alltime</span> <span class="op">==</span> <span class="cn">FALSE</span></span>
+<span> <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="va">pollyear</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span></span>
+<span>   <span class="va">pollyear</span>,</span>
+<span>   <span class="va">position</span>,</span>
+<span>   <span class="va">track</span>,</span>
+<span>   <span class="va">artist</span></span>
+<span> <span class="op">)</span></span>
+<span><span class="co">#&gt;    pollyear position                                     track</span></span>
+<span><span class="co">#&gt; 1      1993        1                                   Asshole</span></span>
+<span><span class="co">#&gt; 2      1994        1                                    Zombie</span></span>
+<span><span class="co">#&gt; 3      1995        1                                Wonderwall</span></span>
+<span><span class="co">#&gt; 4      1996        1                             Buy Me a Pony</span></span>
+<span><span class="co">#&gt; 5      1997        1                            No Aphrodisiac</span></span>
+<span><span class="co">#&gt; 6      1998        1              Pretty Fly (For a White Guy)</span></span>
+<span><span class="co">#&gt; 7      1999        1                                These Days</span></span>
+<span><span class="co">#&gt; 8      2000        1                              My Happiness</span></span>
+<span><span class="co">#&gt; 9      2001        1                                   Amazing</span></span>
+<span><span class="co">#&gt; 10     2002        1                              No One Knows</span></span>
+<span><span class="co">#&gt; 11     2003        1                 Are You Gonna Be My Girl?</span></span>
+<span><span class="co">#&gt; 12     2004        1                               Take Me Out</span></span>
+<span><span class="co">#&gt; 13     2005        1                             Wish You Well</span></span>
+<span><span class="co">#&gt; 14     2006        1                          One Crowded Hour</span></span>
+<span><span class="co">#&gt; 15     2007        1                        Knights of Cydonia</span></span>
+<span><span class="co">#&gt; 16     2008        1                               Sex on Fire</span></span>
+<span><span class="co">#&gt; 17     2009        1                           Little Lion Man</span></span>
+<span><span class="co">#&gt; 18     2010        1                             Big Jet Plane</span></span>
+<span><span class="co">#&gt; 19     2011        1 Somebody That I Used to Know {ft. Kimbra}</span></span>
+<span><span class="co">#&gt; 20     2012        1                    Thrift Shop {ft. Wanz}</span></span>
+<span><span class="co">#&gt; 21     2013        1                                   Riptide</span></span>
+<span><span class="co">#&gt; 22     2014        1                             Talk Is Cheap</span></span>
+<span><span class="co">#&gt; 23     2015        1                                     Hoops</span></span>
+<span><span class="co">#&gt; 24     2016        1               Never Be Like You {Ft. Kai}</span></span>
+<span><span class="co">#&gt; 25     2017        1                                   HUMBLE.</span></span>
+<span><span class="co">#&gt; 26     2018        1                                Confidence</span></span>
+<span><span class="co">#&gt; 27     2019        1                                   bad guy</span></span>
+<span><span class="co">#&gt; 28     2020        1                                Heat Waves</span></span>
+<span><span class="co">#&gt; 29     2021        1   Elephant [triple j Like A Version 2021]</span></span>
+<span><span class="co">#&gt; 30     2022        1                               Say Nothing</span></span>
+<span><span class="co">#&gt; 31     2023        1                        Paint The Town Red</span></span>
+<span><span class="co">#&gt; 32     2024        1                          Good Luck, Babe!</span></span>
+<span><span class="co">#&gt;                     artist</span></span>
+<span><span class="co">#&gt; 1              Denis Leary</span></span>
+<span><span class="co">#&gt; 2          The Cranberries</span></span>
+<span><span class="co">#&gt; 3                    Oasis</span></span>
+<span><span class="co">#&gt; 4               Spiderbait</span></span>
+<span><span class="co">#&gt; 5             The Whitlams</span></span>
+<span><span class="co">#&gt; 6            The Offspring</span></span>
+<span><span class="co">#&gt; 7             Powderfinger</span></span>
+<span><span class="co">#&gt; 8             Powderfinger</span></span>
+<span><span class="co">#&gt; 9               Alex Lloyd</span></span>
+<span><span class="co">#&gt; 10 Queens of the Stone Age</span></span>
+<span><span class="co">#&gt; 11                     Jet</span></span>
+<span><span class="co">#&gt; 12         Franz Ferdinand</span></span>
+<span><span class="co">#&gt; 13         Bernard Fanning</span></span>
+<span><span class="co">#&gt; 14             Augie March</span></span>
+<span><span class="co">#&gt; 15                    Muse</span></span>
+<span><span class="co">#&gt; 16           Kings of Leon</span></span>
+<span><span class="co">#&gt; 17          Mumford &amp; Sons</span></span>
+<span><span class="co">#&gt; 18     Angus &amp; Julia Stone</span></span>
+<span><span class="co">#&gt; 19                   Gotye</span></span>
+<span><span class="co">#&gt; 20 Macklemore &amp; Ryan Lewis</span></span>
+<span><span class="co">#&gt; 21               Vance Joy</span></span>
+<span><span class="co">#&gt; 22              Chet Faker</span></span>
+<span><span class="co">#&gt; 23              The Rubens</span></span>
+<span><span class="co">#&gt; 24                   Flume</span></span>
+<span><span class="co">#&gt; 25          Kendrick Lamar</span></span>
+<span><span class="co">#&gt; 26             Ocean Alley</span></span>
+<span><span class="co">#&gt; 27           Billie Eilish</span></span>
+<span><span class="co">#&gt; 28           Glass Animals</span></span>
+<span><span class="co">#&gt; 29             The Wiggles</span></span>
+<span><span class="co">#&gt; 30       Flume [Ft. MAY-A]</span></span>
+<span><span class="co">#&gt; 31                Doja Cat</span></span>
+<span><span class="co">#&gt; 32           Chappell Roan</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="polls">Polls<a class="anchor" aria-label="anchor" href="#polls"></a>
@@ -175,10 +263,97 @@
 <span><span class="co">#&gt;  8 Allen Ginsberg   USA       1996       </span></span>
 <span><span class="co">#&gt;  9 Weezer           USA       1996       </span></span>
 <span><span class="co">#&gt; 10 311              USA       1996       </span></span>
-<span><span class="co">#&gt; # ℹ 2,719 more rows</span></span></code></pre></div>
+<span><span class="co">#&gt; # ℹ 2,719 more rows</span></span>
+<span><span class="co"># who has appeared 10 or more times?</span></span>
+<span><span class="va">artists</span> <span class="op">|&gt;</span></span>
+<span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html" class="external-link">count</a></span><span class="op">(</span><span class="va">artist</span>, sort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">n</span> <span class="op">&gt;=</span> <span class="fl">10</span><span class="op">)</span></span>
+<span><span class="co">#&gt;                  artist  n</span></span>
+<span><span class="co">#&gt; 1         Hilltop Hoods 14</span></span>
+<span><span class="co">#&gt; 2          Foo Fighters 12</span></span>
+<span><span class="co">#&gt; 3              The Cure 12</span></span>
+<span><span class="co">#&gt; 4        The Living End 12</span></span>
+<span><span class="co">#&gt; 5        Arctic Monkeys 11</span></span>
+<span><span class="co">#&gt; 6             Radiohead 11</span></span>
+<span><span class="co">#&gt; 7  Bring Me The Horizon 10</span></span>
+<span><span class="co">#&gt; 8             Grinspoon 10</span></span>
+<span><span class="co">#&gt; 9                  Illy 10</span></span>
+<span><span class="co">#&gt; 10           Kanye West 10</span></span>
+<span><span class="co">#&gt; 11            Metallica 10</span></span>
+<span><span class="co">#&gt; 12            Pearl Jam 10</span></span>
+<span><span class="co">#&gt; 13         Powderfinger 10</span></span>
+<span><span class="co">#&gt; 14               R.E.M. 10</span></span>
+<span><span class="co">#&gt; 15          Tame Impala 10</span></span>
+<span><span class="co">#&gt; 16                   U2 10</span></span>
+<span></span>
+<span><span class="co"># top 10 artists?</span></span>
+<span><span class="va">artists</span> <span class="op">|&gt;</span></span>
+<span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html" class="external-link">count</a></span><span class="op">(</span><span class="va">country</span>, sort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice_max</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">10</span>, order_by <span class="op">=</span> <span class="va">n</span><span class="op">)</span></span>
+<span><span class="co">#&gt;        country    n</span></span>
+<span><span class="co">#&gt; 1    Australia 1234</span></span>
+<span><span class="co">#&gt; 2          USA  757</span></span>
+<span><span class="co">#&gt; 3           UK  479</span></span>
+<span><span class="co">#&gt; 4       Canada   48</span></span>
+<span><span class="co">#&gt; 5  New Zealand   29</span></span>
+<span><span class="co">#&gt; 6       Sweden   27</span></span>
+<span><span class="co">#&gt; 7      Ireland   23</span></span>
+<span><span class="co">#&gt; 8       France   18</span></span>
+<span><span class="co">#&gt; 9      Germany   11</span></span>
+<span><span class="co">#&gt; 10     Iceland   11</span></span></code></pre></div>
 </div>
 </div>
 </div>
+<div class="section level1">
+<h1 id="old-timers-and-newbies">Old timers and newbies<a class="anchor" aria-label="anchor" href="#old-timers-and-newbies"></a>
+</h1>
+<p>The artists that are appearing frequently are an interesting mix of old timers and newbies. For the most common artists, have they had a long career, or did they rocket up the charts quickly?</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggrepel.slowkow.com/" class="external-link">ggrepel</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">tracks</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="va">alltime</span> <span class="op">)</span><span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter-joins.html" class="external-link">semi_join</a></span><span class="op">(</span></span>
+<span>    <span class="co"># Filter to only the artists with the most appearances</span></span>
+<span>    <span class="op">{</span><span class="va">tracks</span> <span class="op">|&gt;</span></span>
+<span>      <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="va">alltime</span> <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>      <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">artist</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>      <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>count <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html" class="external-link">n</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>      <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">ungroup</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>      <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice_max</a></span><span class="op">(</span><span class="va">count</span>, n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span><span class="op">}</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">artist</span>, <span class="va">pollyear</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>hits <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html" class="external-link">n</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">ungroup</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="va">artist</span>, <span class="va">pollyear</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">artist</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>cumulative_hits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cumsum.html" class="external-link">cumsum</a></span><span class="op">(</span><span class="va">hits</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">ungroup</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">artist</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>total_hits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">hits</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="co"># Adding a filtered version of the artist's name for use in labelling the chart</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>artist_name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">total_hits</span> <span class="op">==</span> <span class="va">cumulative_hits</span>, <span class="va">artist</span>, <span class="cn">NA_character_</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="co"># We'll use artist_name_y to offset the name positions a bit from the actual points so we can see both</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>artist_name_y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">total_hits</span> <span class="op">==</span> <span class="va">cumulative_hits</span>, <span class="va">cumulative_hits</span> <span class="op">+</span> <span class="fl">1</span>, <span class="cn">NA_integer_</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">ungroup</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">pollyear</span>, y <span class="op">=</span> <span class="va">cumulative_hits</span>, group <span class="op">=</span> <span class="va">artist</span>, col <span class="op">=</span> <span class="va">artist</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggrepel.slowkow.com/reference/geom_text_repel.html" class="external-link">geom_label_repel</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">artist_name_y</span>, label <span class="op">=</span> <span class="va">artist_name</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">'none'</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_x_continuous</a></span><span class="op">(</span>limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="fl">2030</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Comparative velocity of most popular Triple J Hottest 100 artists over time"</span>,</span>
+<span>       caption <span class="op">=</span> <span class="st">"10 artists with the most songs across time in the 'this year' polls"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Joining with `by = join_by(artist)`</span></span>
+<span><span class="co">#&gt; `summarise()` has grouped output by 'artist'. You can override using the</span></span>
+<span><span class="co">#&gt; `.groups` argument.</span></span>
+<span><span class="co">#&gt; Warning: Removed 77 rows containing missing values or values outside the scale range</span></span>
+<span><span class="co">#&gt; (`geom_label_repel()`).</span></span></code></pre></div>
+<p><img src="reference/figures/README-hit-velocity-1.png" width="100%"></p>
+</div>
+
   </main><aside class="col-md-3"><div class="links">
 <h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">

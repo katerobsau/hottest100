@@ -8,14 +8,20 @@ data(hottest100_tracks)
 # and add the prompt to the end of the glue string
 
 artist_prompt_list = hottest100_tracks |>
-  mutate(prompt_str =
-           glue("For {artist} | {track} | {releaseyear} - what type of artist is this band/solo/other, what is the artist gender and are they an indigenous australia")) |>
+  mutate(
+    prompt_str = glue(
+      "For {artist} | {track} | {releaseyear} - what type of artist is this band/solo/other, what is the artist gender and are they an indigenous australia"
+    )
+  ) |>
   pull(prompt_str) |>
   as.list()
 
 track_prompt_list = hottest100_tracks |>
-  mutate(prompt_str =
-           glue("For {artist} | {track} | {releaseyear} - what is the genre of this song and is it a cover")) |>
+  mutate(
+    prompt_str = glue(
+      "For {artist} | {track} | {releaseyear} - what is the genre of this song and is it a cover"
+    )
+  ) |>
   pull(prompt_str) |>
   as.list()
 
@@ -53,26 +59,35 @@ music_chat <- ellmer::chat_anthropic(chat_description)
 # Some test cases:
 
 ind_head = 1:5 # Interesting shows male/Male
-set.seed(1); ind_random = sample(1:length(prompt_list), 10) #random sample
+set.seed(1)
+ind_random = sample(1:length(prompt_list), 10) #random sample
 ind_test_indigneous = c(3117, 3309, 2021) # Various identities
 ind_test_gender = c(3024, 3836, 3673, 2711, 1, 430) # Various genders
 
-test_head = parallel_chat_structured(music_chat,
-                                artist_prompt_list[ind_head],
-                                type_artist)
+test_head = parallel_chat_structured(
+  music_chat,
+  artist_prompt_list[ind_head],
+  type_artist
+)
 
-test_random = parallel_chat_structured(music_chat,
-                                         artist_prompt_list[ind_random],
-                                         type_artist)
+test_random = parallel_chat_structured(
+  music_chat,
+  artist_prompt_list[ind_random],
+  type_artist
+)
 
-test_indigneous_artists = parallel_chat_structured(music_chat,
-                                           artist_prompt_list[ind_test_indigneous],
-                                           type_artist)
+test_indigneous_artists = parallel_chat_structured(
+  music_chat,
+  artist_prompt_list[ind_test_indigneous],
+  type_artist
+)
 
-  # this returned NA/no for indigenous Australian for the same band
-test_gender = parallel_chat_structured(music_chat,
-                                       artist_prompt_list[ind_test_gender],
-                                       type_artist)
+# this returned NA/no for indigenous Australian for the same band
+test_gender = parallel_chat_structured(
+  music_chat,
+  artist_prompt_list[ind_test_gender],
+  type_artist
+)
 
 ## Step 5: Generate augmented data
 
@@ -111,7 +126,9 @@ music_chat$register_tool(ellmer::tool(
   .name = "music_data"
 ))
 
-classify_artist_gender_raw <- music_chat$chat("Using artist_data can you classify the artists as female, male, female members, male members, mixed members, other or unknown. Return a list with the artist and assigned classification. Nothing else.")
+classify_artist_gender_raw <- music_chat$chat(
+  "Using artist_data can you classify the artists as female, male, female members, male members, mixed members, other or unknown. Return a list with the artist and assigned classification. Nothing else."
+)
 
 classify_artist_gender <- classify_artist_gender_raw |>
   strsplit("\n") |>
@@ -122,4 +139,6 @@ classify_artist_gender_df = classify_artist_gender |>
   separate(artist_gender, sep = " - ", into = c("artist", "gender"))
 
 
-classify_artist_type <- music_chat$chat("Using artist_data can you classify the artists as solo, band, DJ/produced. Return a list with the artist and assigned classification. Nothing else.")
+classify_artist_type <- music_chat$chat(
+  "Using artist_data can you classify the artists as solo, band, DJ/produced. Return a list with the artist and assigned classification. Nothing else."
+)

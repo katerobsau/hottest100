@@ -8,5 +8,3 @@ artists <- tracks |>
 
 readr::write_csv(artists, "data-raw/csv/hottest100-artists.csv")
 usethis::use_data(artists, overwrite = TRUE)
-
-  
